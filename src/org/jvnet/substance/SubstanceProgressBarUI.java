@@ -212,11 +212,6 @@ public class SubstanceProgressBarUI extends MetalProgressBarUI {
 		progressBar.repaint();
 	}
 
-	static String getMemoryUsage() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SubstanceProgressBarUI: \n");
-		sb.append("\t" + stripeMap.size() + " stripes");
-		return sb.toString();
-	}
+	
 
 }

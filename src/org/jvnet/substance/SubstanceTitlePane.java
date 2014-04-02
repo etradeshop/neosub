@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Locale;
 
 import javax.swing.*;
 import javax.swing.plaf.UIResource;
@@ -274,19 +273,15 @@ public class SubstanceTitlePane extends JComponent {
 	 * Adds the necessary <code>JMenuItem</code>s to the passed in menu.
 	 */
 	private void addMenuItems(JMenu menu) {
-		Locale locale = getRootPane().getLocale();
-		JMenuItem mi = menu.add(restoreAction);
-
-		mi = menu.add(iconifyAction);
-
+		
 		if (Toolkit.getDefaultToolkit().isFrameStateSupported(
 				Frame.MAXIMIZED_BOTH)) {
-			mi = menu.add(maximizeAction);
+		 menu.add(maximizeAction);
 		}
 
 		menu.add(new JSeparator());
 
-		mi = menu.add(closeAction);
+		menu.add(closeAction);
 	}
 
 	/**
@@ -311,12 +306,17 @@ public class SubstanceTitlePane extends JComponent {
 		closeButton.setText(null);
 		closeButton.putClientProperty("paintActive", Boolean.TRUE);
 		closeButton.setBorder(null);
+                
+             
 		closeButton.setToolTipText("Close");
 		closeButton.setIcon(SubstanceImageCreator
 				.getCloseIcon(SubstanceLookAndFeel.getColorScheme()));
-
-		SubstanceBackgroundDelegate.trackTitleButton(this.closeButton,
-				SubstanceButtonUI.ButtonTitleKind.CLOSE);
+   closeButton.setForeground(Color.red);
+   closeButton.setOpaque(true);
+   closeButton.setFocusPainted(true);
+                closeButton.setBackground(Color.red);
+	//	SubstanceBackgroundDelegate.trackTitleButton(this.closeButton,
+		//		SubstanceButtonUI.ButtonTitleKind.CLOSE);
 
 		if (getWindowDecorationStyle() == JRootPane.FRAME) {
 			Icon maximizeIcon = SubstanceIconFactory.getTitlePaneIcon(
@@ -326,9 +326,9 @@ public class SubstanceTitlePane extends JComponent {
 
 			// SubstanceImageCreator.getMaximizeIcon(SubstanceLookAndFeel
 			// .getColorScheme());
-			Icon restoreSizeIcon = SubstanceIconFactory.getTitlePaneIcon(
-					SubstanceIconFactory.IconKind.RESTORE, SubstanceLookAndFeel
-							.getColorScheme());
+			//Icon restoreSizeIcon = SubstanceIconFactory.getTitlePaneIcon(
+			//		SubstanceIconFactory.IconKind.RESTORE, SubstanceLookAndFeel
+			//				.getColorScheme());
 			;
 
 			// SubstanceImageCreator
@@ -336,10 +336,11 @@ public class SubstanceTitlePane extends JComponent {
 
 			minimizeButton = createTitleButton();
 			minimizeButton.setAction(iconifyAction);
+                      
 			minimizeButton.setText(null);
 			minimizeButton.putClientProperty("paintActive", Boolean.TRUE);
 			minimizeButton.setBorder(null);
-			minimizeButton.setToolTipText("Minimize");
+			minimizeButton.setToolTipText("Mi");
 			minimizeButton.setIcon(SubstanceIconFactory.getTitlePaneIcon(
 					SubstanceIconFactory.IconKind.MINIMIZE,
 					SubstanceLookAndFeel.getColorScheme()));
@@ -347,7 +348,7 @@ public class SubstanceTitlePane extends JComponent {
 			SubstanceBackgroundDelegate.trackTitleButton(this.minimizeButton,
 					SubstanceButtonUI.ButtonTitleKind.REGULAR);
 
-			toggleButton = createTitleButton();
+			toggleButton = createTitleButton();                   
 			toggleButton.setAction(restoreAction);
 			toggleButton.putClientProperty("paintActive", Boolean.TRUE);
 			toggleButton.setBorder(null);
@@ -406,9 +407,7 @@ public class SubstanceTitlePane extends JComponent {
 				JRootPane rootPane = getRootPane();
 
 				if (((state & Frame.MAXIMIZED_BOTH) != 0)
-						&& (rootPane.getBorder() == null || (rootPane
-								.getBorder() instanceof UIResource))
-						&& frame.isShowing()) {
+		&& (rootPane.getBorder() == null || (rootPane.getBorder() instanceof UIResource))&& frame.isShowing()) {
 					rootPane.setBorder(null);
 				} else {
 					if ((state & Frame.MAXIMIZED_BOTH) == 0) {
@@ -419,18 +418,12 @@ public class SubstanceTitlePane extends JComponent {
 				}
 				if (frame.isResizable()) {
 					if ((state & Frame.MAXIMIZED_BOTH) != 0) {
-						updateToggleButton(restoreAction, SubstanceIconFactory
-								.getTitlePaneIcon(
-										SubstanceIconFactory.IconKind.RESTORE,
-										SubstanceLookAndFeel.getColorScheme()));
+updateToggleButton(restoreAction, SubstanceIconFactory.getTitlePaneIcon(SubstanceIconFactory.IconKind.RESTORE,SubstanceLookAndFeel.getColorScheme()));
 						toggleButton.setToolTipText("Restore");
 						maximizeAction.setEnabled(false);
 						restoreAction.setEnabled(true);
 					} else {
-						updateToggleButton(maximizeAction, SubstanceIconFactory
-								.getTitlePaneIcon(
-										SubstanceIconFactory.IconKind.MAXIMIZE,
-										SubstanceLookAndFeel.getColorScheme()));
+	updateToggleButton(maximizeAction, SubstanceIconFactory.getTitlePaneIcon(SubstanceIconFactory.IconKind.MAXIMIZE,SubstanceLookAndFeel.getColorScheme()));
 						toggleButton.setToolTipText("Maximize");
 						maximizeAction.setEnabled(true);
 						restoreAction.setEnabled(false);
@@ -530,37 +523,29 @@ public class SubstanceTitlePane extends JComponent {
 		int width = getWidth();
 		int height = getHeight();
 
-		ColorSchemeEnum colorSchemeEnum = isSelected ? SubstanceLookAndFeel
-				.getColorScheme() : SubstanceLookAndFeel.getColorScheme()
-				.getMetallic();
+ColorSchemeEnum colorSchemeEnum = isSelected ? SubstanceLookAndFeel.getColorScheme() : SubstanceLookAndFeel.getColorScheme();
 
-		g.drawImage(SubstanceImageCreator.getRectangularBackground(width,
-				height + 1, colorSchemeEnum, false), 0, 0, null);
+		g.drawImage(SubstanceImageCreator.getRectangularBackground(width,height + 1, colorSchemeEnum, false), 0, 0, null);
 
 		// offset of border
 		int xOffset = 5;
 
 		String theTitle = getTitle();
-		int leftTransitionStart = (menuBar == null) ? 0
-				: menuBar.getWidth() + 10;
-		int leftTransitionEnd = (menuBar == null) ? 0
-				: (leftTransitionStart + 20);
+		int leftTransitionStart = (menuBar == null) ? 0: menuBar.getWidth() + 10;
+		int leftTransitionEnd = (menuBar == null) ? 0: (leftTransitionStart + 20);
 		xOffset += leftTransitionEnd;
 
 		int rightTransitionStart = (int) (0.7 * width);
-		int rightTransitionEnd = Math.min(rightTransitionStart + 20,
-				(int) (0.8 * width));
+		int rightTransitionEnd = Math.min(rightTransitionStart + 20,(int) (0.8 * width));
 
 		// find the leftmost button for the right transition band
 		JButton leftmostButton = null;
-		Frame frame = getFrame();
+		
 
-		if (minimizeButton != null && (minimizeButton.getParent() != null)
-				&& (minimizeButton.getBounds().width != 0)) {
+if (minimizeButton != null && (minimizeButton.getParent() != null)&& (minimizeButton.getBounds().width != 0)) {
 			leftmostButton = minimizeButton;
 		} else {
-			if (toggleButton != null && (toggleButton.getParent() != null)
-					&& (toggleButton.getBounds().width != 0)) {
+if (toggleButton != null && (toggleButton.getParent() != null)&& (toggleButton.getBounds().width != 0)) {
 				leftmostButton = toggleButton;
 			} else {
 				if (closeButton != null && closeButton.getParent() != null) {
@@ -594,8 +579,7 @@ public class SubstanceTitlePane extends JComponent {
 			FontMetrics fm = rootPane.getFontMetrics(g.getFont());
 			int yOffset = ((height - fm.getHeight()) / 2) + fm.getAscent();
 
-			Object oldAAValue = graphics
-					.getRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING);
+Object oldAAValue = graphics.getRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING);
 			graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 					RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 			if (colorSchemeEnum.isDark()) {
@@ -631,8 +615,7 @@ public class SubstanceTitlePane extends JComponent {
 			Window window = getWindow();
 
 			if (window != null) {
-				window.dispatchEvent(new WindowEvent(window,
-						WindowEvent.WINDOW_CLOSING));
+window.dispatchEvent(new WindowEvent(window,WindowEvent.WINDOW_CLOSING));
 			}
 		}
 	}
@@ -700,9 +683,7 @@ public class SubstanceTitlePane extends JComponent {
 	 * from the Frame associated with the <code>JRootPane</code>.
 	 */
 	class SubstanceMenuBar extends JMenuBar {
-		private JButton activatorButton;
-
-		private Rectangle activatorRectangle;
+		
 
 		public void paint(Graphics g) {
 			Frame frame = getFrame();
@@ -790,7 +771,7 @@ public class SubstanceTitlePane extends JComponent {
 		private int computeHeight() {
 			FontMetrics fm = rootPane.getFontMetrics(getFont());
 			int fontHeight = fm.getHeight();
-			fontHeight += 7;
+			fontHeight += 80;// ツールバーの高さ
 			int iconHeight = 0;
 			if (getWindowDecorationStyle() == JRootPane.FRAME) {
 				iconHeight = SubstanceImageCreator.ICON_DIMENSION;
@@ -814,7 +795,7 @@ public class SubstanceTitlePane extends JComponent {
 
 			if (closeButton != null && closeButton.getIcon() != null) {
 				buttonHeight = closeButton.getIcon().getIconHeight();
-				buttonWidth = closeButton.getIcon().getIconWidth();
+				buttonWidth = closeButton.getIcon().getIconWidth()*5;
 			} else {
 				buttonHeight = SubstanceImageCreator.ICON_DIMENSION;
 				buttonWidth = SubstanceImageCreator.ICON_DIMENSION;
@@ -825,7 +806,7 @@ public class SubstanceTitlePane extends JComponent {
 			spacing = 5;
 			x = spacing;
 			if (menuBar != null) {
-				menuBar.setBounds(x, y, buttonWidth + 1, buttonHeight);
+				menuBar.setBounds(x+80, y, buttonWidth + 1, buttonHeight);
 			}
 
 			x = w;
@@ -833,15 +814,16 @@ public class SubstanceTitlePane extends JComponent {
 			x -= (spacing + buttonWidth);
 			if (closeButton != null) {
 				closeButton.setBounds(x, y, buttonWidth, buttonHeight);
+                             
 			}
 
 			if (getWindowDecorationStyle() == JRootPane.FRAME) {
 				if (Toolkit.getDefaultToolkit().isFrameStateSupported(
 						Frame.MAXIMIZED_BOTH)) {
 					if (toggleButton.getParent() != null) {
-						spacing = 10;
+						spacing = 2;
 						x -= (spacing + buttonWidth);
-						toggleButton.setBounds(x, y, buttonWidth, buttonHeight);
+						toggleButton.setBounds(x, y, buttonWidth, buttonHeight+20);
 					}
 				}
 
@@ -849,7 +831,7 @@ public class SubstanceTitlePane extends JComponent {
 						&& minimizeButton.getParent() != null) {
 					spacing = 2;
 					x -= (spacing + buttonWidth);
-					minimizeButton.setBounds(x, y, buttonWidth, buttonHeight);
+					minimizeButton.setBounds(x, y, buttonWidth, buttonHeight+20);
 				}
 			}
 		}

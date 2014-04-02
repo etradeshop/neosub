@@ -1,8 +1,6 @@
 package org.jvnet.substance.theme;
 
 import java.awt.Color;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -14,8 +12,6 @@ import org.jvnet.substance.*;
 import org.jvnet.substance.color.ColorScheme;
 import org.jvnet.substance.color.ColorSchemeEnum;
 
-import ch.randelshofer.quaqua.ButtonStateIcon;
-import ch.randelshofer.quaqua.util.Images;
 
 /**
  * Theme for <code>Substance</code> look and feel.
@@ -63,10 +59,7 @@ public class SubstanceTheme extends DefaultMetalTheme {
 	 */
 	private ColorSchemeEnum colorSchemeEnum;
 
-	/**
-	 * Common directory for Quaqua images.
-	 */
-	protected final static String commonDir = "/ch/randelshofer/quaqua/images/";
+	
 
 	/**
 	 * Simple constructor. Made protected to prevent direct instantiation in
@@ -151,11 +144,8 @@ public class SubstanceTheme extends DefaultMetalTheme {
 	/**
 	 * From Quaqua
 	 */
-	protected Icon createButtonStateIcon(final String location, final int states) {
-		BufferedImage[] images = Images.split(Toolkit.getDefaultToolkit()
-				.getImage(getClass().getResource(location)), states, true);
-
-		return new ButtonStateIcon(images);
+	protected Icon createButtonStateIcon(final String location, final int states) {		
+		return new ImageIcon(location);
 	}
 
 	/**
@@ -238,94 +228,9 @@ public class SubstanceTheme extends DefaultMetalTheme {
 		Border textBorder = new BorderUIResource(new SubstanceBorder());
 
 		Object[] defaults = new Object[] {
-				// quaqua
-				"Slider.upThumbSmall",
-				SubstanceIconFactory.getSliderHorizontalIcon(14, true),
+				
 
-				// quaqua
-				"Slider.leftThumbSmall",
-				SubstanceIconFactory.getSliderVerticalIcon(14, true),
-
-				// quaqua
-				"Component.visualMargin",
-				visualMargin,
-
-				// quaqua
-				"ColorChooser.swatchesSwatchSize",
-				new DimensionUIResource(5, 5),
-
-				// quaqua
-				"ColorChooser.resetMnemonic",
-				new Integer(-1),
-
-				// class names of default choosers for quaqua
-				"ColorChooser.defaultChoosers",
-				new String[] {
-						"ch.randelshofer.quaqua.colorchooser.ColorWheelChooser",
-						"ch.randelshofer.quaqua.colorchooser.ColorSlidersChooser",
-						"ch.randelshofer.quaqua.colorchooser.ColorPalettesChooser",
-						"ch.randelshofer.quaqua.colorchooser.SwatchesChooser",
-						"ch.randelshofer.quaqua.colorchooser.CrayonsChooser" },
-
-				// quaqua
-				"ColorChooser.foreground",
-				foregroundColor,
-
-				// quaqua
-				"ColorChooser.swatchesSwatchSize",
-				new DimensionUIResource(5, 5),
-
-				// quaqua
-				"ColorChooser.resetMnemonic",
-				new Integer(-1),
-
-				// quaqua
-				"ColorChooser.crayonsImage",
-				new UIDefaults.LazyValue() {
-					public Object createValue(UIDefaults table) {
-						return Toolkit
-								.getDefaultToolkit()
-								.createImage(
-										getClass()
-												.getResource(
-														commonDir
-																+ "ColorChooser.crayons.png"));
-					}
-				},
-
-				// quaqua
-				"ColorChooser.textSliderGap",
-				new Integer(3),
-
-				// quaqua
-				"ColorChooser.colorPalettesIcon",
-				makeButtonStateIcon(commonDir
-						+ "ColorChooser.colorPalettesIcons.png", 3),
-
-				// quaqua
-				"ColorChooser.colorSlidersIcon",
-				makeButtonStateIcon(commonDir
-						+ "ColorChooser.colorSlidersIcons.png", 3),
-
-				// quaqua
-				"ColorChooser.colorSwatchesIcon",
-				makeButtonStateIcon(commonDir
-						+ "ColorChooser.colorSwatchesIcons.png", 3),
-
-				// quaqua
-				"ColorChooser.colorWheelIcon",
-				makeButtonStateIcon(commonDir
-						+ "ColorChooser.colorWheelIcons.png", 3),
-
-				// quaqua
-				"ColorChooser.crayonsIcon",
-				makeButtonStateIcon(
-						commonDir + "ColorChooser.crayonsIcons.png", 3),
-
-				// quaqua
-				"ColorChooser.imagePalettesIcon",
-				makeButtonStateIcon(commonDir
-						+ "ColorChooser.imagePalettesIcons.png", 3),
+			
 
 				// Note: The following colors are used in color lists.
 				// It is important that these colors are neutral (black, white
@@ -338,15 +243,7 @@ public class SubstanceTheme extends DefaultMetalTheme {
 				"ColorChooser.listSelectionForeground",
 				new ColorUIResource(0x000000),
 
-				"RibbonBand.border",
-				textBorder,
-
-				"RibbonBand.background",
-				new ColorUIResource(backgroundColor.darker()),
-
-				"RibbonBand.expandIcon",
-				new IconUIResource(SubstanceImageCreator
-						.getRibbonBandExpandIcon(13, this.colorSchemeEnum)),
+				
 
 				"control",
 				controlText,

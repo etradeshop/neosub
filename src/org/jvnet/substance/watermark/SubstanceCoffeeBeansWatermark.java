@@ -1,4 +1,4 @@
-package test;
+package org.jvnet.substance.watermark;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

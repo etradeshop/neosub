@@ -394,14 +394,6 @@ public class SubstanceScrollBarUI extends MetalScrollBarUI implements Trackable 
 		return thumbB.contains(me.getX(), me.getY());
 	}
 
-	static String getMemoryUsage() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SubstanceScrollBarUI: \n");
-		sb.append("\t" + trackHorizontalMap.size() + " track horizontal, "
-				+ trackVerticalMap.size() + " track vertical, "
-				+ thumbHorizontalMap.size() + " thumb horizontal, "
-				+ thumbVerticalMap.size() + " thumb vertical");
-		return sb.toString();
-	}
+	
 
 }

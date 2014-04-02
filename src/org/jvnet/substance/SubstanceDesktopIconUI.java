@@ -2,7 +2,6 @@ package org.jvnet.substance;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.beans.*;
 
 import javax.swing.*;
@@ -11,8 +10,7 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicDesktopIconUI;
 
-import org.jvnet.substance.SubstanceInternalFrameTitlePane.ClickListener;
-import org.jvnet.substance.color.ColorSchemeEnum;
+
 
 /**
  * UI for desktop icons in <b>Substance</b> look and feel.
@@ -120,18 +118,8 @@ public class SubstanceDesktopIconUI extends BasicDesktopIconUI {
 			public void mouseEntered(MouseEvent e) {
 				if (isInDrag)
 					return;
-				final BufferedImage previewImage = SubstanceInternalFrameTitlePane
-						.getSnapshot(frame);
-				if (previewImage != null) {
-					previewWindow.getContentPane().removeAll();
-					previewWindow.getContentPane().add(
-							new JLabel(new ImageIcon(previewImage)),
-							BorderLayout.CENTER);
-					previewWindow.setSize(previewImage.getWidth(), previewImage
-							.getHeight());
-					syncPreviewWindow(true);
-					previewWindow.setVisible(true);
-				}
+				
+				
 			}
 
 			@Override
@@ -145,27 +133,10 @@ public class SubstanceDesktopIconUI extends BasicDesktopIconUI {
 				previewWindow.setVisible(false);
 			}
 
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				isInDrag = false;
-				syncPreviewWindow(true);
-				previewWindow.setVisible(true);
-			}
+			
+			
 		});
-		this.titleLabel.addMouseMotionListener(new MouseMotionAdapter() {
-			// @Override
-			// public void mouseMoved(MouseEvent e) {
-			// syncPreviewWindow();
-			// }
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				isInDrag = true;
-				if (previewWindow.isVisible()) {
-					syncPreviewWindow(false);
-					previewWindow.setVisible(false);
-				}
-			}
-		});
+		
 
 		this.iconLabel = new JLabel(icon);
 		this.iconLabel.setOpaque(false);
@@ -181,7 +152,7 @@ public class SubstanceDesktopIconUI extends BasicDesktopIconUI {
 			}
 		});
 		desktopIcon.add(this.restoreButton);
-		this.addClickCorrectionListener(this.restoreButton);
+		
 		this.maximizeButton = new JButton(SubstanceImageCreator
 				.getMaximizeIcon(SubstanceLookAndFeel.getColorScheme()));
 		// new JButton(title, icon);
@@ -199,7 +170,7 @@ public class SubstanceDesktopIconUI extends BasicDesktopIconUI {
 			}
 		});
 		desktopIcon.add(this.maximizeButton);
-		this.addClickCorrectionListener(this.maximizeButton);
+		
 		this.closeButton = new JButton(SubstanceImageCreator
 				.getCloseIcon(SubstanceLookAndFeel.getColorScheme()));
 		this.closeButton.addActionListener(new ActionListener() {
@@ -454,12 +425,7 @@ public class SubstanceDesktopIconUI extends BasicDesktopIconUI {
 	 * @param button
 	 *            Button.
 	 */
-	private void addClickCorrectionListener(JButton button) {
-		for (ActionListener listener : button.getActionListeners())
-			if (listener instanceof ClickListener)
-				return;
-		button.addActionListener(new ClickListener());
-	}
+	
 
 	/**
 	 * Removes correction listener on the specified button. Such listener resets
@@ -471,13 +437,7 @@ public class SubstanceDesktopIconUI extends BasicDesktopIconUI {
 	 *            Button.
 	 */
 	private void removeClickCorrectionListener(JButton button) {
-		ActionListener[] actionListeners = button.getActionListeners();
-		for (ActionListener actionListener : actionListeners) {
-			if (actionListener instanceof ClickListener) {
-				button.removeActionListener(actionListener);
-			}
-		}
-	}
+	
 
 	/*
 	 * (non-Javadoc)
@@ -485,51 +445,11 @@ public class SubstanceDesktopIconUI extends BasicDesktopIconUI {
 	 * @see javax.swing.plaf.ComponentUI#paint(java.awt.Graphics,
 	 *      javax.swing.JComponent)
 	 */
-	public void paint(Graphics g, JComponent c) {
-		JInternalFrame.JDesktopIcon di = (JInternalFrame.JDesktopIcon) c;
-		di.setOpaque(false);
 
-		int width = di.getWidth();
-		int height = di.getHeight();
-
-		ColorSchemeEnum colorSchemeEnum = true ? SubstanceLookAndFeel
-				.getColorScheme() : SubstanceLookAndFeel.getColorScheme()
-				.getMetallic();
-
-		Graphics2D graphics = (Graphics2D) g.create();
-		// the background is translucent
-		graphics.setComposite(AlphaComposite.getInstance(
-				AlphaComposite.SRC_ATOP, 0.6f));
-
-		graphics.drawImage(SubstanceImageCreator.getRectangularBackground(
-				width, height, colorSchemeEnum, false), 0, 0, null);
-
-		di.paintComponents(graphics);
-
-		graphics.dispose();
-	}
 
 	/* (non-Javadoc)
 	 * @see javax.swing.plaf.ComponentUI#update(java.awt.Graphics, javax.swing.JComponent)
 	 */
-	@Override
-	public void update(Graphics g, JComponent c) {
-		this.paint(g, c);
-	}
-
-	/**
-	 * Synchronizes the preview window.
-	 * 
-	 * @param toShow Indication whether the preview window is shown.
-	 */
-	private void syncPreviewWindow(boolean toShow) {
-		if (toShow) {
-			int x = this.desktopIcon.getLocationOnScreen().x;
-			int y = this.desktopIcon.getLocationOnScreen().y;
-
-			this.previewWindow.setLocation(x, y
-					- this.previewWindow.getHeight());
-
-		}
+	
 	}
 }

@@ -1,6 +1,5 @@
 package org.jvnet.substance;
 
-import java.awt.Font;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -67,14 +66,7 @@ public class SubstanceLookAndFeel extends MetalLookAndFeel {
 		} catch (Exception exc) {
 			// probably running in unsecure JNLP - ignore
 		}
-		try {
-			String paramTraceFile = System.getProperty("substancelaf.traceFile");
-			if (paramTraceFile != null) {
-				MemoryAnalyzer.commence(5000, paramTraceFile);
-			}
-		} catch (Exception exc) {
-			// probably running in unsecure JNLP - ignore
-		}
+		
 	}
 
 	/**
@@ -355,7 +347,7 @@ public class SubstanceLookAndFeel extends MetalLookAndFeel {
 		String UI_CLASSNAME_PREFIX = "org.jvnet.substance.Substance";
 		Object[] uiDefaults = {
 
-		"ColorChooserUI", "ch.randelshofer.quaqua.Quaqua14ColorChooserUI",
+		"ColorChooserUI", UI_CLASSNAME_PREFIX +"ColorChooserUI",
 
 		"ButtonUI", UI_CLASSNAME_PREFIX + "ButtonUI",
 
@@ -396,10 +388,6 @@ public class SubstanceLookAndFeel extends MetalLookAndFeel {
 		"RadioButtonUI", UI_CLASSNAME_PREFIX + "RadioButtonUI",
 
 		"RadioButtonMenuItemUI", UI_CLASSNAME_PREFIX + "RadioButtonMenuItemUI",
-
-		"RibbonUI", UI_CLASSNAME_PREFIX + "RibbonUI",
-
-		"RibbonBandUI", UI_CLASSNAME_PREFIX + "RibbonBandUI",
 
 		"RootPaneUI", UI_CLASSNAME_PREFIX + "RootPaneUI",
 
@@ -448,164 +436,4 @@ public class SubstanceLookAndFeel extends MetalLookAndFeel {
 		// }
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.plaf.basic.BasicLookAndFeel#initComponentDefaults(javax.swing.UIDefaults)
-	 */
-	@Override
-	protected void initComponentDefaults(UIDefaults table) {
-		super.initComponentDefaults(table);
-
-//		Object[] defaults = {
-//
-//				"OptionPane.errorIcon",
-//				SubstanceImageCreator.getErrorMarkerIcon(32,
-//						ColorSchemeEnum.SUNSET),
-//
-//				"OptionPane.informationIcon",
-//				SubstanceImageCreator.getInfoMarkerIcon(32,
-//						ColorSchemeEnum.AQUA),
-//
-//				"OptionPane.warningIcon",
-//				SubstanceImageCreator.getWarningMarkerIcon(32,
-//						ColorSchemeEnum.SUN_GLARE),
-//
-//				"OptionPane.questionIcon",
-//				SubstanceImageCreator.getQuestionMarkerIcon(32,
-//						ColorSchemeEnum.LIME_GREEN),
-//
-//		};
-//		table.putDefaults(defaults);
-
-		Font tahomaPlain11 = new Font("Tahoma", Font.PLAIN, 11);
-		Font tahomaPlain12 = new Font("Tahoma", Font.PLAIN, 12);
-		Font tahomaBold11 = new Font("Tahoma", Font.BOLD, 11);
-		Font tahomaBold12 = new Font("Tahoma", Font.BOLD, 12);
-		if (tahomaPlain11 != null) {
-			Object[] fontDefaults = {
-
-			"Button.font", tahomaPlain11,
-
-			"CheckBox.font", tahomaPlain11,
-
-			"CheckBoxMenuItem.font", tahomaPlain11,
-
-			"CheckBoxMenuItem.acceleratorFont", tahomaPlain11,
-
-			"ColorChooser.font", tahomaPlain11,
-
-			// quaqua
-            "ColorChooser.crayonsFont", tahomaBold12,
-            
-			"ComboBox.font", tahomaPlain11,
-
-			"DesktopIcon.font", tahomaBold12,
-
-			"EditorPane.font", tahomaPlain11,
-
-			"FormattedTextField.font", tahomaPlain11,
-
-			"InternalFrame.titleFont", tahomaBold12,
-
-			"Label.font", tahomaPlain11,
-
-			"List.font", tahomaPlain11,
-
-			"Menu.font", tahomaPlain11,
-
-			"Menu.acceleratorFont", tahomaPlain11,
-
-			"MenuBar.font", tahomaPlain11,
-
-			"MenuItem.font", tahomaPlain11,
-
-			"MenuItem.acceleratorFont", tahomaPlain11,
-
-			"OptionPane.font", tahomaPlain11,
-
-			"OptionPane.messageFont", tahomaPlain11,
-
-			"OptionPane.buttonFont", tahomaPlain11,
-
-			"Panel.font", tahomaPlain11,
-
-			"PasswordField.font", tahomaPlain11,
-
-			"PopupMenu.font", tahomaPlain11,
-
-			"ProgressBar.font", tahomaPlain11,
-
-			"RadioButton.font", tahomaPlain11,
-
-			"RadioButtonMenuItem.font", tahomaPlain11,
-
-			"RadioButtonMenuItem.acceleratorFont", tahomaPlain11,
-
-			"ScrollPane.font", tahomaPlain11,
-
-			"Spinner.font", tahomaPlain11,
-
-			"TabbedPane.font", tahomaPlain11,
-
-			"Table.font", tahomaPlain11,
-
-			"TableHeader.font", tahomaPlain11,
-
-			"TextField.font", tahomaPlain11,
-
-			"TextPane.font", tahomaPlain11,
-
-			"ToolBar.font", tahomaPlain11,
-
-			"ToggleButton.font", tahomaPlain11,
-
-			"Tree.font", tahomaPlain11,
-
-			"Viewport.font", tahomaPlain11,
-
-			"Spinner.font", tahomaPlain11,
-
-			"TextArea.font", tahomaPlain11,
-
-			"TitledBorder.font", tahomaBold11,
-
-			"ToolTip.font", tahomaPlain11,
-
-			};
-			table.putDefaults(fontDefaults);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.LookAndFeel#getDisabledIcon(javax.swing.JComponent,
-	 *      javax.swing.Icon)
-	 */
-
-	@Override
-	public Icon getDisabledIcon(JComponent component, Icon icon) {
-		Icon disIcon = super.getDisabledIcon(component, icon);
-		// to greyscale
-		return SubstanceImageCreator.toGreyscale(disIcon);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.LookAndFeel#getDisabledSelectedIcon(javax.swing.JComponent,
-	 *      javax.swing.Icon)
-	 */
-
-	@Override
-	public Icon getDisabledSelectedIcon(JComponent component, Icon icon) {
-		Icon disIcon = super.getDisabledSelectedIcon(component, icon);
-		// to greyscale
-		return SubstanceImageCreator.toGreyscale(disIcon);
-	}
-
-	@Override
-	protected void createDefaultTheme() {
-	}
 }

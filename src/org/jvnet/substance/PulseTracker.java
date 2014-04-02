@@ -252,12 +252,5 @@ public class PulseTracker implements ActionListener {
 		return tracker.isRunning();
 	}
 
-	static String getMemoryUsage() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("PulseTracker: \n");
-		sb.append("\t" + trackers.size() + " trackers, " + cycles.size()
-				+ " cycles");
-		return sb.toString();
-	}
-
+	
 }

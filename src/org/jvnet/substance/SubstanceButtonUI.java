@@ -71,9 +71,7 @@ public class SubstanceButtonUI extends MetalButtonUI {
 			public Insets getBorderInsets(Component c) {
 				if (c instanceof AbstractButton) {
 					AbstractButton button = (AbstractButton) c;
-					if (Utilities.isRibbonButton(button)
-							|| Utilities.isButtonStripButton(button))
-						return new Insets(0, 0, 0, 0);
+					
 					if (Utilities.hasText(button)) {
 						return new Insets(0, DEFAULT_HEIGHT / 2, 0,
 								DEFAULT_HEIGHT / 2);

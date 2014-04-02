@@ -109,10 +109,5 @@ public class SubstanceGradientBackgroundDelegate {
 		}
 	}
 
-	static String getMemoryUsage() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SubstanceGradientBackgroundDelegate: \n");
-		sb.append("\t" + backgrounds.size() + " backgrounds");
-		return sb.toString();
-	}
+	
 }

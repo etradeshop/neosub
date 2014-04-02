@@ -83,10 +83,5 @@ public class SubstanceCheckBoxUI extends SubstanceRadioButtonUI {
 		return icons.get(ComponentState.getState(model, button));
 	}
 
-	static String getMemoryUsage() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SubstanceCheckBox: \n");
-		sb.append("\t" + icons.size() + " icons");
-		return sb.toString();
-	}
+	
 }

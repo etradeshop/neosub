@@ -232,10 +232,5 @@ public class SubstanceTabbedPaneUI extends MetalTabbedPaneUI {
 			tabbedPane.repaint();
 		}
 	}
-	static String getMemoryUsage() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SubstanceTabbedPaneUI: \n");
-		sb.append("\t" + backgroundMap.size() + " backgrounds");
-		return sb.toString();
-	}
+	
 }

@@ -981,10 +981,5 @@ public class SubstanceRootPaneUI extends MetalRootPaneUI {
 		super.paint(g, c);
 	}
 
-	static String getMemoryUsage() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SubstanceRootPaneUI: \n");
-		sb.append("\t" + titlePanes.size() + " title panes");
-		return sb.toString();
-	}
+	
 }

@@ -193,11 +193,6 @@ public class SubstanceComboBoxUI extends BasicComboBoxUI {
 		// ignores the painting of the default cell renderer.
 	}
 
-	static String getMemoryUsage() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SubstanceComboBoxUI: \n");
-		sb.append("\t" + COMBO_ARROWS.size() + " arrows");
-		return sb.toString();
-	}
+	
 
 }

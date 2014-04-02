@@ -410,9 +410,7 @@ public class SubstanceMenuBarUI extends BasicMenuBarUI {
 	 * @see javax.swing.plaf.ComponentUI#createUI(javax.swing.JComponent)
 	 */
 	public static ComponentUI createUI(JComponent c) {
-		if (MemoryAnalyzer.isRunning()) {
-			MemoryAnalyzer.enqueueUsage("SubstanceMenuBarUI to be created");
-		}
+		
 		SubstanceMenuBarUI result = new SubstanceMenuBarUI();
 		final JMenuBar jmb = (JMenuBar) c;
 		boolean toAddListener = false;
@@ -441,24 +439,19 @@ public class SubstanceMenuBarUI extends BasicMenuBarUI {
 					if (!(e.getChild() instanceof JMenu))
 						return;
 					if (!inEvent) {
-						boolean isTracingOn = MemoryAnalyzer.isRunning();
+						
 						inEvent = true;
 						Component removed = null;
 						for (int i = 0; i < jmb.getComponentCount(); i++) {
 							if (jmb.getComponent(i) instanceof SearchPanel) {
-								if (isTracingOn)
-									MemoryAnalyzer.enqueueUsage("At " + i
-											+ " have search panel");
+								
 								removed = jmb.getComponent(i);
 								break;
 							}
 						}
 						if (removed != null) {
 							jmb.remove(removed);
-							if (isTracingOn)
-								MemoryAnalyzer.enqueueUsage("Adding at "
-										+ (jmb.getComponentCount())
-										+ " out of " + jmb.getComponentCount());
+							
 							jmb.add(removed, jmb.getComponentCount());
 							// Show search panel only if have more than 40 menu
 							// items in all menus.

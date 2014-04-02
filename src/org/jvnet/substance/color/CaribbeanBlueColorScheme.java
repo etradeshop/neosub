@@ -1,4 +1,4 @@
-package test;
+package org.jvnet.substance.color;
 
 import java.awt.Color;
 

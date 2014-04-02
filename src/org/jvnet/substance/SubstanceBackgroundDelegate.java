@@ -8,7 +8,7 @@ import javax.swing.AbstractButton;
 import javax.swing.JButton;
 
 import org.jvnet.substance.color.ColorSchemeEnum;
-import org.jvnet.substance.comp.JButtonStrip.StripOrientation;
+
 import org.jvnet.substance.theme.SubstanceTheme;
 
 /**
@@ -213,134 +213,7 @@ public class SubstanceBackgroundDelegate {
 	 *            Button height.
 	 * @return Button background image.
 	 */
-	private static synchronized BufferedImage getStripBackground(
-			AbstractButton button, StripOrientation stripOrientation,
-			int width, int height, boolean isFirst, boolean isLast,
-			int totalStripDimension, int relativeOffset) {
-		ComponentState state = ComponentState.getState(button.getModel(),
-				button);
-		ComponentState.ColorSchemeKind kind = state.getColorSchemeKind();
-		int cyclePos = state.getCycleCount();
 
-		ColorSchemeEnum colorSchemeEnum = null;
-		switch (kind) {
-		case CURRENT:
-			colorSchemeEnum = SubstanceLookAndFeel.getColorScheme();
-			break;
-		case REGULAR:
-			colorSchemeEnum = SubstanceLookAndFeel.getColorScheme()
-					.getMetallic();
-			break;
-		case DISABLED:
-			colorSchemeEnum = SubstanceLookAndFeel.getColorScheme().getGray();
-			break;
-		}
-
-		String key = stripOrientation.name() + ":" + width + ":" + height + ":"
-				+ kind.name() + ":" + cyclePos + ":" + isFirst + ":" + isLast
-				+ ":" + totalStripDimension + ":" + button.getClass().getName();
-		if (!stripBackgrounds.containsKey(key)) {
-			if (stripOrientation == StripOrientation.HORIZONTAL) {
-				// three distinct cases - leftmost, rightmost, and all the rest
-				if (isFirst) {
-					// create background that is strip wide and take its left
-					// part
-					BufferedImage bigImage = SubstanceImageCreator
-							.getRoundedBackground(totalStripDimension, height,
-									3, colorSchemeEnum, cyclePos,
-									SubstanceImageCreator.Side.RIGHT);
-					BufferedImage finalImage = SubstanceImageCreator
-							.getBlankImage(width, height);
-					Graphics g = finalImage.getGraphics();
-					g.drawImage(bigImage, 0, 0, width, height, 0, 0, width,
-							height, null);
-					stripBackgrounds.put(key, finalImage);
-				} else {
-					if (isLast) {
-						// create background that is strip wide and take its
-						// right part
-						BufferedImage bigImage = SubstanceImageCreator
-								.getRoundedBackground(totalStripDimension,
-										height, 3, colorSchemeEnum, cyclePos,
-										SubstanceImageCreator.Side.LEFT);
-						BufferedImage finalImage = SubstanceImageCreator
-								.getBlankImage(width, height);
-						Graphics g = finalImage.getGraphics();
-						g.drawImage(bigImage, 0, 0, width, height,
-								relativeOffset, 0, relativeOffset + width,
-								height, null);
-						stripBackgrounds.put(key, finalImage);
-					} else {
-						// create background that is strip wide and take
-						// its mid part
-						BufferedImage bigImage = SubstanceImageCreator
-								.getRoundedBackground(totalStripDimension,
-										height, 3, colorSchemeEnum, cyclePos,
-										null);
-						BufferedImage finalImage = SubstanceImageCreator
-								.getBlankImage(width, height);
-						Graphics g = finalImage.getGraphics();
-						g.drawImage(bigImage, 0, 0, width, height,
-								relativeOffset, 0, relativeOffset + width,
-								height, null);
-						stripBackgrounds.put(key, finalImage);
-					}
-				}
-			} else {
-				// three distinct cases - top, bottom, and all the rest
-				if (isFirst) {
-					// create background that is strip height and take its top
-					// part
-					BufferedImage bigImage = SubstanceImageCreator
-							.getRoundedBackground(totalStripDimension, width,
-									3, colorSchemeEnum, cyclePos,
-									SubstanceImageCreator.Side.LEFT);
-					bigImage = SubstanceImageCreator.getRotated(bigImage, 3);
-					BufferedImage finalImage = SubstanceImageCreator
-							.getBlankImage(width, height);
-					Graphics g = finalImage.getGraphics();
-					g.drawImage(bigImage, 0, 0, width, height, 0, 0, width,
-							height, null);
-					stripBackgrounds.put(key, finalImage);
-				} else {
-					if (isLast) {
-						// create background that is strip high and take its
-						// bottom part
-						BufferedImage bigImage = SubstanceImageCreator
-								.getRoundedBackground(totalStripDimension,
-										width, 3, colorSchemeEnum, cyclePos,
-										SubstanceImageCreator.Side.RIGHT);
-						bigImage = SubstanceImageCreator
-								.getRotated(bigImage, 3);
-						BufferedImage finalImage = SubstanceImageCreator
-								.getBlankImage(width, height);
-						Graphics g = finalImage.getGraphics();
-						g.drawImage(bigImage, 0, 0, width, height,
-								0, relativeOffset, width,
-								relativeOffset + height, null);
-						stripBackgrounds.put(key, finalImage);
-					} else {
-						// create background that is strip high and take
-						// its mid part
-						BufferedImage bigImage = SubstanceImageCreator
-								.getRoundedBackground(totalStripDimension,
-										width, 3, colorSchemeEnum, cyclePos,
-										null);
-						bigImage = SubstanceImageCreator
-								.getRotated(bigImage, 3);
-						BufferedImage finalImage = SubstanceImageCreator
-								.getBlankImage(width, height);
-						Graphics g = finalImage.getGraphics();
-						g.drawImage(bigImage, 0, 0, width, height,
-								0, relativeOffset, width,
-								relativeOffset + height, null);
-						stripBackgrounds.put(key, finalImage);
-					}
-				}
-			}
-		}
-		return stripBackgrounds.get(key);
-	}
 
 	/**
 	 * Retrieves background image for the specified button.
@@ -491,17 +364,7 @@ public class SubstanceBackgroundDelegate {
 			return;
 		}
 
-		if (Utilities.isRibbonButton(button)) {
-			BufferedImage ribbonBackground = getRibbonBackground(button, width,
-					height);
-			if (ribbonBackground == null) {
-				// should call fill background
-				fillDelegate.update(g, button);
-			} else {
-				graphics.drawImage(ribbonBackground, 0, 0, null);
-			}
-			return;
-		}
+		
 
 		SubstanceButtonUI.ButtonTitleKind buttonKind = getKind(button);
 		if ((buttonKind == SubstanceButtonUI.ButtonTitleKind.CLOSE_DI)
@@ -523,19 +386,7 @@ public class SubstanceBackgroundDelegate {
 	 * @param cycleCount
 	 *            Cycle count for transition effects.
 	 */
-	public void updateBackgroundInStrip(Graphics g, AbstractButton button,
-			StripOrientation stripOrientation, boolean isFirst, boolean isLast,
-			int totalStripDimension, int relativeOffset) {
-		button.setOpaque(false);
-		Graphics2D graphics = (Graphics2D) g;
-
-		int width = button.getWidth();
-		int height = button.getHeight();
-
-		graphics.drawImage(getStripBackground(button, stripOrientation, width,
-				height, isFirst, isLast, totalStripDimension, relativeOffset),
-				0, 0, null);
-	}
+	
 
 	/**
 	 * Checks whether the specified button has round corners.
@@ -606,15 +457,6 @@ public class SubstanceBackgroundDelegate {
 		}
 	}
 
-	static String getMemoryUsage() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SubstanceBackgroundDelegate: \n");
-		sb.append("\t" + regularBackgrounds.size() + " regular, "
-				+ ribbonBackgrounds.size() + " ribbon, "
-				+ roundBackgrounds.size() + " round, "
-				+ scrollBarBackgrounds.size() + " scroll bar, "
-				+ stripBackgrounds.size() + " toggle");
-		return sb.toString();
-	}
+	
 
 }

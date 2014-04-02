@@ -96,30 +96,7 @@ public final class SubstanceImageCreator {
 	 * @return Transparent image of specified dimension.
 	 */
 	public static BufferedImage getBlankImage(int width, int height) {
-		if (MemoryAnalyzer.isRunning()) {
-			// see if the request is unusual
-			if ((width >= 100) || (height >= 100)) {
-				// throw an Exception and then analyze it
-				try {
-					throw new Exception();
-				} catch (Exception exc) {
-					StringBuffer sb = new StringBuffer();
-					StackTraceElement[] stack = exc.getStackTrace();
-					int count = 0;
-					for (StackTraceElement stackEntry : stack) {
-						if (count++ > 8)
-							break;
-						sb.append(stackEntry.getClassName() + ".");
-						sb.append(stackEntry.getMethodName() + " [");
-						sb.append(stackEntry.getLineNumber() + "]");
-						sb.append("\n");
-					}
-					MemoryAnalyzer.enqueueUsage("Blank " + width + "*" + height
-							+ "\n" + sb.toString());
-
-				}
-			}
-		}
+	
 
 		BufferedImage image = new BufferedImage(width, height,
 				BufferedImage.TYPE_INT_ARGB);

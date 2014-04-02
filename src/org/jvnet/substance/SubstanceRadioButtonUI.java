@@ -127,10 +127,5 @@ public class SubstanceRadioButtonUI extends MetalRadioButtonUI {
 		// override to not show the focus rectangle from Metal
 	}
 
-	static String getMemoryUsage() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SubstanceRadioButtonUI: \n");
-		sb.append("\t" + icons.size() + " icons");
-		return sb.toString();
-	}
+	
 }

@@ -2,11 +2,9 @@ package org.jvnet.substance;
 
 import java.awt.Container;
 import java.awt.FontMetrics;
-
 import javax.swing.*;
 
-import org.jvnet.substance.comp.JButtonStrip;
-import org.jvnet.substance.comp.JRibbon;
+
 
 /**
  * Various utility functions.
@@ -202,11 +200,7 @@ public class Utilities {
 	 * @return <code>true</code> if in button strip, <code>false</code>
 	 *         otherwise
 	 */
-	public static boolean isButtonStripButton(AbstractButton b) {
-		Container parent = b.getParent();
-		return parent != null
-				&& (parent instanceof JButtonStrip || parent.getParent() instanceof JButtonStrip);
-	}
+	
 
 	/**
 	 * Checks and answers if the specified button is in a ribbon.
@@ -216,8 +210,5 @@ public class Utilities {
 	 * @return <code>true</code> if in ribbon, <code>false</code>
 	 *         otherwise
 	 */
-	public static boolean isRibbonButton(AbstractButton b) {
-		Container parent = b.getParent();
-		return parent != null && (parent instanceof JRibbon);
-	}
+	
 }
